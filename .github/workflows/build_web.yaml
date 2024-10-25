@@ -21,8 +21,7 @@ jobs:
 
     steps:
     - uses: mymindstorm/setup-emsdk@v14
-
-    - with:
+      with:
         # If true will not download any version of Emscripten. emsdk will still be added to PATH.
         no-install: false
         # If true will not cache any downloads with tc.cacheDir.
