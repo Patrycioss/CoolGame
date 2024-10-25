@@ -1,45 +1,36 @@
-﻿#include <iostream>
+﻿#include <raylib.h>
 
-// #define RESOURCES
-
-#include <filesystem>
-
-#include "raylib.h"
+#include "Game.hpp"
 
 #if defined(PLATFORM_WEB)
-    #include <emscripten/emscripten.h>
-#endif
+#include <emscripten/emscripten.h>
 
-static Texture2D texture;
+// Static function for emscripten that expects a c-function.
+static Game* gamePtr;
 
-static void UpdateDrawFrame() {
-	BeginDrawing();
-	DrawTexture(texture, 0,0,WHITE);
-	ClearBackground(RED);
-	DrawText("Congrats! You created your first window!", 190, 200, 20, LIGHTGRAY);
-	EndDrawing();
+static void Update() {
+	gamePtr->Update();
 }
+
+#endif
 
 constexpr int TARGET_FPS = 60;
 
-
 int main() {
-	
-	InitWindow(800, 450, "raylib [core] example - basic window");
+	InitWindow(1000, 800, "DreamGame");
 	InitAudioDevice();
 
-	std::string path = std::string(RESOURCES) + "/textures/awesomeface.png";
-	texture = LoadTexture(path.c_str());
+	Game game;
 
 #if defined(PLATFORM_WEB)
-	emscripten_set_main_loop(UpdateDrawFrame,TARGET_FPS,1);
+	gamePtr = &game;
+	emscripten_set_main_loop(Update, TARGET_FPS, 1);
 #else
 
 	SetTargetFPS(TARGET_FPS);
-	
-	while (!WindowShouldClose())
-	{
-		UpdateDrawFrame();
+
+	while (!WindowShouldClose()) {
+		game.Update();
 	}
 #endif
 
