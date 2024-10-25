@@ -35,8 +35,6 @@ jobs:
         # update: # optional
         # Deprecated in favor of `update`.
         # update-tags: # optional
-        
-    - run: emcc -o index.html main.cpp -Os -Wall ./DreamGame/raylib-web-build/libraylib.a -s USE_GLFW=3 --shell-file path-to/shell.html -DPLATFORM_WEB 
 
     
     - uses: actions/checkout@v4
