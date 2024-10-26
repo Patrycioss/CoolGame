@@ -4,7 +4,7 @@
 #include <string>
 
 Game::Game() {
-	std::string path = std::string(RESOURCES) + "/textures/awesomeface.png";
+	const std::string path = std::string(RESOURCES) + "/textures/awesomeface.png";
 	texture = LoadTexture(path.c_str());
 }
 
