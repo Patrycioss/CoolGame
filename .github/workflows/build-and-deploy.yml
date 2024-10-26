@@ -34,13 +34,13 @@ jobs:
       - name: Install Emscripten
         uses: mymindstorm/setup-emsdk@v14
       - name: CMake Prep Step
-        run: cmake -S . -B build -G Ninja -DPLATFORM=Web "-DCMAKE_TOOLCHAIN_FILE=${{env.EM_CACHE_FOLDER}}/upstream/emscripten/cmake/Modules/Platform/Emscripten.cmake"
+        run: cmake -S DreamGame -B DreamGame/build -G Ninja -DPLATFORM=Web "-DCMAKE_TOOLCHAIN_FILE=${{env.EM_CACHE_FOLDER}}/upstream/emscripten/cmake/Modules/Platform/Emscripten.cmake"
       - name: CMake Build Step
-        run: cmake --build build
+        run: cmake --build DreamGame/build
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: 'build'
+          path: 'DreamGame/build'
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
