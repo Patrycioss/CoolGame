@@ -39,10 +39,17 @@ jobs:
         run: cmake -S DreamGame -B DreamGame/build -G Ninja -DPLATFORM=Web "-DCMAKE_TOOLCHAIN_FILE=${{ env.EMSDK }}/upstream/emscripten/cmake/Modules/Platform/Emscripten.cmake"
       - name: CMake Build Step
         run: cmake --build DreamGame/build
+      - name: Upload Prep Step
+        run: |
+          mkdir "pages-files"
+          mv DreamGame/build/index.html pages-files
+          mv DreamGame/build/index.js pages-files
+          mv DreamGame/build/index.data pages-files
+          mv DreamGame/build/index.wasm pages-files    
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: 'DreamGame/build'
+          path: 'pages-files'
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
