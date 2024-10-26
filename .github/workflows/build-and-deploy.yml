@@ -35,11 +35,8 @@ jobs:
         run: sudo apt install ninja-build
       - name: Install Emscripten
         uses: mymindstorm/setup-emsdk@v14
-        with:
-          version: 3.1.64
-          actions-cache-folder: 'emsdk-cache'
       - name: CMake Prep Step
-        run: cmake -S DreamGame -B DreamGame/build -G Ninja -DPLATFORM=Web "-DCMAKE_TOOLCHAIN_FILE=emsdk-cache/emsdk-main/upstream/emscripten/cmake/Modules/Platform/Emscripten.cmake"
+        run: cmake -S DreamGame -B DreamGame/build -G Ninja -DPLATFORM=Web "-DCMAKE_TOOLCHAIN_FILE=${{ env.EMSDK }}/upstream/emscripten/cmake/Modules/Platform/Emscripten.cmake"
       - name: CMake Build Step
         run: cmake --build DreamGame/build
       - name: Upload artifact
