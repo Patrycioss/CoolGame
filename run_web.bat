@@ -1,4 +1,4 @@
-start "" http://192.168.2.111:8000/
-cd docs
-python -m http.server 8000 
+cd DreamGame/cmake-build-build-web
 
+start "" http://localhost:8000/
+python -m http.server 8000 
