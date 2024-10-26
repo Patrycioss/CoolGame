@@ -37,7 +37,8 @@ target_compile_definitions(${PROJECT_NAME} PRIVATE RESOURCES="${CMAKE_CURRENT_BI
 
 # Web Configurations
 if (${PLATFORM} STREQUAL "Web")
-    set_target_properties(${PROJECT_NAME} PROPERTIES SUFFIX ".html") # Tell Emscripten to build an example.html file.
+    set_target_properties(${PROJECT_NAME} PROPERTIES OUTPUT_NAME "index")
+    set_target_properties(${PROJECT_NAME} PROPERTIES SUFFIX ".html")
     set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -s USE_GLFW=3 -s WASM=1 -s ASYNCIFY -s GL_ENABLE_GET_PROC_ADDRESS=1 --preload-file ${CMAKE_CURRENT_BINARY_DIR}/resources")
 endif()
 
