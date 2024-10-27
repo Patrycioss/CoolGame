@@ -5,11 +5,8 @@
 #if defined(PLATFORM_WEB)
 #include <emscripten/emscripten.h>
 
-// Static function for emscripten that expects a c-function.
-static Game* gamePtr;
-
 static void Update() {
-	gamePtr->Update();
+	Game::Instance().Update();
 }
 
 #endif
@@ -20,17 +17,14 @@ int main() {
 	InitWindow(1000, 800, "DreamGame");
 	InitAudioDevice();
 
-	Game game;
-
 #if defined(PLATFORM_WEB)
-	gamePtr = &game;
 	emscripten_set_main_loop(Update, TARGET_FPS, true);
 #else
 
 	SetTargetFPS(TARGET_FPS);
 
 	while (!WindowShouldClose()) {
-		game.Update();
+		Game::Instance().Update();
 	}
 #endif
 
