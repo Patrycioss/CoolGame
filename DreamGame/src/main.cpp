@@ -24,7 +24,7 @@ int main() {
 
 #if defined(PLATFORM_WEB)
 	gamePtr = &game;
-	emscripten_set_main_loop(Update, TARGET_FPS, 1);
+	emscripten_set_main_loop(Update, TARGET_FPS, true);
 #else
 
 	SetTargetFPS(TARGET_FPS);
