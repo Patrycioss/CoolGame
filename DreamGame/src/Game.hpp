@@ -28,6 +28,7 @@ class Game {
 		void operator=(Game const&) = delete;
 
 		void Update();
+		void Render();
 
 		static Game& Instance();
 };

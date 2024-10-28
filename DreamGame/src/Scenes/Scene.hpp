@@ -14,11 +14,13 @@ class Scene {
 
 		void InternalStart();
 		void InternalUpdate();
+		void InternalRender();
 		void InternalStop();
 
 	protected:
 		virtual void Start();
 		virtual void Update();
+		virtual void Render();
 		virtual void Stop();
 
 	public:
