@@ -5,7 +5,7 @@
 #include <vector>
 
 #include "GameObject.hpp"
-#include "Scenes/SceneManager.hpp"
+#include "scenes/SceneManager.hpp"
 
 class Game {
 	private:

@@ -1,8 +1,8 @@
 ﻿#include "Game.hpp"
 #include <string>
 
-#include "Scenes/TestScene1.hpp"
-#include "Scenes/TestScene2.hpp"
+#include "scenes/TestScene1.hpp"
+#include "scenes/TestScene2.hpp"
 
 #include "Player.hpp"
 
