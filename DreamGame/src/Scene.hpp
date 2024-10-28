@@ -2,14 +2,14 @@
 
 #include <string>
 
-
-class Scene 
-{
+class Scene {
 	friend class SceneManager;
 
 	private:
 		std::string name;
 		bool loggingEnabled = true;
+
+		explicit Scene(const std::string& name);
 
 		void InternalStart();
 		void InternalUpdate();
@@ -20,7 +20,8 @@ class Scene
 		void Update();
 		void Stop();
 
+		const std::string& Name();
+
 	public:
-		explicit Scene(const std::string& name);
 		void EnableLogging(bool enable);
 };

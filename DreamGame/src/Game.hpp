@@ -5,6 +5,7 @@
 #include <vector>
 
 #include "GameObject.hpp"
+#include "SceneManager.hpp"
 
 class Game {
 	private:
@@ -12,6 +13,7 @@ class Game {
 		static Game* instance;
 
 		Texture texture;
+		// SceneManager sceneManager;
 
 		std::vector<std::unique_ptr<GameObject>> gameObjects;
 
