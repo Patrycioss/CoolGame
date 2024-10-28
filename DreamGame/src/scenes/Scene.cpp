@@ -1,6 +1,6 @@
 ﻿#include "Scene.hpp"
 
-#include "../Logger.hpp"
+#include "../utils/Logger.hpp"
 
 void Scene::InternalStart() {
 	Start();

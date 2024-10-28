@@ -4,8 +4,8 @@
 #include <unordered_map>
 #include <memory>
 
-#include "../Concepts.hpp"
-#include "../Logger.hpp"
+#include "../utils/Logger.hpp"
+#include "../utils/Concepts.hpp"
 
 class SceneManager {
 	private:
