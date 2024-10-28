@@ -7,7 +7,10 @@ class Scene {
 
 	private:
 		std::string name;
-		bool loggingEnabled = true;
+
+		bool logStartStop = true;
+		bool logUpdate = false;
+		bool logRender = false;
 
 		void InternalStart();
 		void InternalUpdate();
@@ -20,7 +23,11 @@ class Scene {
 
 	public:
 		explicit Scene(const std::string& name);
-		void EnableLogging(bool enable);
+
+		void LogStartStop(bool value);
+		void LogUpdate(bool value);
+		void LogRender(bool value);
+	
 		const std::string& Name();
 
 		~Scene();

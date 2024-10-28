@@ -5,24 +5,24 @@
 void Scene::InternalStart() {
 	Start();
 
-	if (loggingEnabled) {
-		Logger::Log("Starting Scene: " + name);
+	if (logStartStop) {
+		Logger::Log("Starting Scene: " + name, __FILE_NAME__, __LINE__);
 	}
 }
 
 void Scene::InternalUpdate() {
 	Update();
 
-	if (loggingEnabled) {
-		Logger::Log("Updating Scene: " + name);
+	if (logUpdate) {
+		Logger::Log("Updating Scene: " + name, __FILE_NAME__, __LINE__);
 	}
 }
 
 void Scene::InternalStop() {
 	Stop();
 
-	if (loggingEnabled) {
-		Logger::Log("Stopping Scene: " + name);
+	if (logStartStop) {
+		Logger::Log("Stopping Scene: " + name, __FILE_NAME__, __LINE__);
 	}
 }
 
@@ -43,8 +43,16 @@ const std::string& Scene::Name() {
 	return name;
 }
 
-void Scene::EnableLogging(const bool enable) {
-	this->loggingEnabled = enable;
+void Scene::LogStartStop(const bool value) {
+	this->logStartStop = value;
+}
+
+void Scene::LogUpdate(const bool value) {
+	this->logUpdate = value;
+}
+
+void Scene::LogRender(const bool value) {
+	this->logRender = value;
 }
 
 Scene::~Scene() {
