@@ -27,7 +27,7 @@ endif()
 # Our Project
 
 file(COPY resources DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
-file(GLOB_RECURSE SOURCES src/*.cpp)
+file(GLOB_RECURSE SOURCES src/*.cpp src/*.hpp)
 
 add_executable(${PROJECT_NAME} ${SOURCES})
 #set(raylib_VERBOSE 1)
