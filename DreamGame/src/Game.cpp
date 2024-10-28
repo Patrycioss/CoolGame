@@ -4,7 +4,7 @@
 #include "scenes/TestScene1.hpp"
 #include "scenes/TestScene2.hpp"
 
-#include "Player.hpp"
+#include "objects/Player.hpp"
 
 std::once_flag Game::initInstanceFlag;
 Game* Game::instance;

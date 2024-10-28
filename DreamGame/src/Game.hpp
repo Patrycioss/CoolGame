@@ -4,7 +4,7 @@
 #include <raylib.h>
 #include <vector>
 
-#include "GameObject.hpp"
+#include "objects/GameObject.hpp"
 #include "scenes/SceneManager.hpp"
 
 class Game {
