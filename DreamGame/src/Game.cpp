@@ -34,10 +34,13 @@ void Game::Update() {
 		}
 	}
 
+	sceneManager.Update();
+
 	BeginDrawing();
 	DrawTexture(texture, 0, 0,WHITE);
 	ClearBackground(RED);
-	sceneManager.Update();
+
+	sceneManager.Render();
 
 	Logger::Print();
 

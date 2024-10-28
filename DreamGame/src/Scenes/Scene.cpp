@@ -18,6 +18,14 @@ void Scene::InternalUpdate() {
 	}
 }
 
+void Scene::InternalRender() {
+	Render();
+
+	if (logRender) {
+		Logger::Log("Rendering Scene: " + name, __FILE__, __LINE__);
+	}
+}
+
 void Scene::InternalStop() {
 	Stop();
 
@@ -30,6 +38,9 @@ void Scene::Start() {
 }
 
 void Scene::Update() {
+}
+
+void Scene::Render() {
 }
 
 void Scene::Stop() {

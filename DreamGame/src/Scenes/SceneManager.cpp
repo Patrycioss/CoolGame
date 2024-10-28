@@ -27,6 +27,12 @@ void SceneManager::Update() const {
 	}
 }
 
+void SceneManager::Render() const {
+	if (hasActiveScene) {
+		activeScene->InternalRender();
+	}
+}
+
 Scene*& SceneManager::ActiveScene() {
 	return activeScene;
 }

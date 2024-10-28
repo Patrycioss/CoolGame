@@ -18,6 +18,7 @@ class SceneManager {
 		SceneManager();
 		void SetScene(const std::string& name);
 		void Update() const;
+		void Render() const;
 
 		[[nodiscard]] Scene*& ActiveScene();
 
