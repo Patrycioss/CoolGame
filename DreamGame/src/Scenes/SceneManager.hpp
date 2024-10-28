@@ -24,7 +24,7 @@ class SceneManager {
 		template<Concepts::Derived<Scene> T>
 		void AddScene(const std::string& name) {
 			if (scenes.contains(name)) {
-				Logger::LogError("Can't add scene, scene: '" + name + "' already exists!");
+				Logger::LogError("Can't add scene, scene: '" + name + "' already exists!", __FILE_NAME__, __LINE__);
 				return;
 			}
 

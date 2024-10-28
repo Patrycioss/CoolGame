@@ -3,7 +3,6 @@
 #include "raylib.h"
 
 void TestScene1::Start() {
-	EnableLogging(true);
 }
 
 void TestScene1::Update() {

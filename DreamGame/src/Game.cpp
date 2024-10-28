@@ -39,6 +39,8 @@ void Game::Update() {
 	ClearBackground(RED);
 	sceneManager.Update();
 
+	Logger::Print();
+
 	EndDrawing();
 }
 
