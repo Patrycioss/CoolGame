@@ -1,10 +1,11 @@
 ﻿#include "SceneManager.hpp"
 
+SceneManager::SceneManager() = default;
+
 void SceneManager::SetScene(const std::string& name) {
 	if (!hasActiveScene || activeScene->name != name) {
-		const char* key = name.c_str();
-		if (scenes.contains(key)) {
-			const auto& scene = scenes.at(key);
+		if (scenes.contains(name)) {
+			const auto& scene = scenes.at(name);
 			activeScene = scene.get();
 
 			if (hasActiveScene) {
@@ -15,7 +16,7 @@ void SceneManager::SetScene(const std::string& name) {
 			hasActiveScene = true;
 			activeScene->InternalStart();
 		} else {
-			//Todo: Log that scene can't be set cause it doesn't exist in the map.
+			Logger::LogError("Can't set scene with name: '" + name + "' cause it isn't registered in the scene map!");
 		}
 	}
 }
@@ -24,4 +25,8 @@ void SceneManager::Update() const {
 	if (hasActiveScene) {
 		activeScene->Update();
 	}
+}
+
+Scene*& SceneManager::ActiveScene() {
+	return activeScene;
 }

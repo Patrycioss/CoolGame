@@ -5,15 +5,17 @@
 #include <vector>
 
 #include "GameObject.hpp"
-#include "SceneManager.hpp"
+#include "Scenes/SceneManager.hpp"
 
 class Game {
 	private:
 		static std::once_flag initInstanceFlag;
 		static Game* instance;
 
+		int counter = 0;
+
 		Texture texture;
-		// SceneManager sceneManager;
+		SceneManager sceneManager;
 
 		std::vector<std::unique_ptr<GameObject>> gameObjects;
 

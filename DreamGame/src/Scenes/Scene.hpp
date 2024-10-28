@@ -9,19 +9,19 @@ class Scene {
 		std::string name;
 		bool loggingEnabled = true;
 
-		explicit Scene(const std::string& name);
-
 		void InternalStart();
 		void InternalUpdate();
 		void InternalStop();
 
 	protected:
-		void Start();
-		void Update();
-		void Stop();
-
-		const std::string& Name();
+		virtual void Start();
+		virtual void Update();
+		virtual void Stop();
 
 	public:
+		explicit Scene(const std::string& name);
 		void EnableLogging(bool enable);
+		const std::string& Name();
+
+		~Scene();
 };
