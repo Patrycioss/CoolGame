@@ -14,22 +14,20 @@ static void Update() {
 constexpr int TARGET_FPS = 60;
 
 int main() {
-	InitWindow(1000, 800, "DreamGame");
-	InitAudioDevice();
-
 #if defined(PLATFORM_WEB)
 	emscripten_set_main_loop(Update, TARGET_FPS, true);
 #else
 
 	SetTargetFPS(TARGET_FPS);
 
+	Game& game = Game::Instance();
+
 	while (!WindowShouldClose()) {
-		Game::Instance().Update();
+		game.Update();
 	}
 #endif
 
-	CloseAudioDevice();
-	CloseWindow();
+	
 
 	return 0;
 }
