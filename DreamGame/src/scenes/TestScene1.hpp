@@ -1,8 +1,12 @@
 ﻿#pragma once
 
+#include "raylib.h"
 #include "Scene.hpp"
 
 class TestScene1 : public Scene {
+	private:
+		Texture2D texture;
+	
 	protected:
 		void Start() override;
 		void Update() override;
@@ -10,5 +14,6 @@ class TestScene1 : public Scene {
 		void Stop() override;
 
 	public:
+	explicit TestScene1(const std::string& name);
 		using Scene::Scene;
 };
