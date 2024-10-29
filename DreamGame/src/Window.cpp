@@ -4,8 +4,7 @@ void Window::UpdateWindowSize() {
 	this->size = Vector2(GetScreenWidth(), GetScreenHeight());
 }
 
-Window::Window(const Vector2& resolution, const bool fullscreen) {
-	this->resolution = resolution;
+Window::Window(const Vector2& resolution, const bool fullscreen) : resolution(resolution){
 
 	unsigned int configFlags{};
 	configFlags |= FLAG_VSYNC_HINT;
@@ -16,6 +15,10 @@ Window::Window(const Vector2& resolution, const bool fullscreen) {
 	}
 
 	SetConfigFlags(configFlags);
+
+	InitWindow((int)resolution.x, (int)resolution.y, "DreamGame");
+
+	UpdateWindowSize();
 }
 
 const Vector2& Window::Size() const {
@@ -24,12 +27,6 @@ const Vector2& Window::Size() const {
 
 const Vector2& Window::Resolution() const {
 	return this->resolution;
-}
-
-void Window::Start() {
-	InitWindow(resolution.x, resolution.y, "DreamGame");
-
-	UpdateWindowSize();
 }
 
 void Window::Update() {

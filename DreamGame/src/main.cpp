@@ -14,20 +14,19 @@ static void Update() {
 constexpr int TARGET_FPS = 60;
 
 int main() {
+
+	Game game;
+	
 #if defined(PLATFORM_WEB)
 	emscripten_set_main_loop(Update, TARGET_FPS, true);
 #else
 
 	SetTargetFPS(TARGET_FPS);
-
-	Game& game = Game::Instance();
-
+	
 	while (!WindowShouldClose()) {
 		game.Update();
 	}
 #endif
-
-	
 
 	return 0;
 }

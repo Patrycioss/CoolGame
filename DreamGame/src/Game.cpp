@@ -3,17 +3,21 @@
 
 #include "scenes/TestScene1.hpp"
 #include "scenes/TestScene2.hpp"
-#include "utils/Vector2Extensions.hpp"
 
 #include "objects/Player.hpp"
 
-std::once_flag Game::initInstanceFlag;
 Game* Game::instance;
 
 Game::Game()
-	: window({1000, 800}, false) {
-	window.Start();
-	renderTexture = LoadRenderTexture(window.Resolution().x, window.Resolution().y);
+	: window({1280, 720}, false),
+	  renderTexture(LoadRenderTexture(static_cast<int>(window.Resolution().x), static_cast<int>(window.Resolution().y))),
+	  camera(
+		  {window.Resolution().x / 2.0f, window.Resolution().y / 2.0f},
+		  {window.Size().x / 2.0f, window.Size().y / 2.0f},
+		  0,
+		  1) {
+	instance = this;
+
 	InitAudioDevice();
 
 	sceneManager.AddScene<TestScene1>("TestScene1");
@@ -23,9 +27,9 @@ Game::Game()
 }
 
 Game::~Game() {
+	UnloadRenderTexture(renderTexture);
 	CloseAudioDevice();
 	CloseWindow();
-	delete instance;
 }
 
 void Game::Update() {
@@ -41,6 +45,7 @@ void Game::Update() {
 	// 	}
 	// }
 
+	window.Update();
 	sceneManager.Update();
 
 	ClearBackground(WHITE);
@@ -48,39 +53,34 @@ void Game::Update() {
 	BeginDrawing();
 
 	ClearBackground(RED);
-	BeginMode2D(camera);
+	camera.Begin();
 
-	// DrawTexture(texture, 0, 0,WHITE);
-
+	// Rendering
 	sceneManager.Render();
 
-	Logger::Print();
-
-	EndMode2D();
+	camera.End();
 	EndTextureMode();
 
-	const Vector2 windowSize(GetScreenWidth(), GetScreenHeight());
-	const float scale = std::min(windowSize.x / window.Resolution().x, windowSize.y / window.Resolution().y);
+	const Vector2 size = window.Size();
+	const Vector2 resolution = window.Resolution();
+	const float scale = std::min(size.x / resolution.x, size.y / resolution.y);
 
-	Vector2 texturePosition = windowSize / 2.0f;
-	Vector2 textureSize = windowSize * scale;
-	texturePosition -= textureSize / 2.0f;
+	Vector2 texturePosition = Vector2{size.x / 2.0f, size.y / 2.0f};
+	const Vector2 textureSize = Vector2{size.x * scale, size.y * scale};
+	texturePosition = Vector2{texturePosition.x - textureSize.x / 2.0f, texturePosition.y - textureSize.y / 2.0f};
 
 	DrawTexturePro(renderTexture.texture,
-	               {0, 0, (float)renderTexture.texture.width, (float)-renderTexture.texture.height},
+	               {0, 0, static_cast<float>(renderTexture.texture.width), static_cast<float>(-renderTexture.texture.height)},
 	               {texturePosition.x, texturePosition.y, textureSize.x, textureSize.y},
 	               {0, 0},
 	               0,
 	               WHITE);
 
 	EndDrawing();
+
+	Logger::Print();
 }
 
 Game& Game::Instance() {
-	std::call_once(initInstanceFlag, InitGame);
 	return *instance;
-}
-
-void Game::InitGame() {
-	instance = new Game();
 }

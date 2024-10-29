@@ -13,7 +13,6 @@ class Window {
 		explicit Window(const Vector2& resolution, bool fullscreen = false);
 		const Vector2& Size() const;
 		const Vector2& Resolution() const;
-		void Start();
 		void Update();
 		bool ShouldClose();
 };
