@@ -24,6 +24,9 @@ class Game {
 		MovableCamera camera;
 
 	public:
+		bool enableDebugging = true;
+
+	
 		Game();
 		~Game();
 		Game(Game const&) = delete;

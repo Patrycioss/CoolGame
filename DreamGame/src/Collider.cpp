@@ -1,5 +1,7 @@
 ﻿#include "Collider.hpp"
 
+#include "objects/GameObject.hpp"
+
 Collider::Collider(GameObject& gameObject, const float radius): owner(gameObject), type(Type::Circle), radius(radius) {
 }
 

@@ -4,7 +4,8 @@
 #include <stdexcept>
 
 #include "raymath.h"
-#include "objects/GameObject.hpp"
+
+class GameObject;
 
 class Collider {
 	public:
