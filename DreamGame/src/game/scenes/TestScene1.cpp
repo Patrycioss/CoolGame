@@ -1,7 +1,5 @@
 ﻿#include "TestScene1.hpp"
 
-#include "raylib.h"
-
 TestScene1::TestScene1(const std::string& name)
 	: Scene(name),
 	  texture(LoadTexture((std::string(RESOURCES) + "/textures/awesomeface.png").c_str())) {

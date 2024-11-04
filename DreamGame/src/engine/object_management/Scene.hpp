@@ -2,11 +2,15 @@
 
 #include <string>
 
+#include "ObjectManager.hpp"
+
 class Scene {
 	friend class SceneManager;
 
 	private:
 		std::string name;
+
+		ObjectManager objectManager;
 
 		bool logStartStop = true;
 		bool logUpdate = false;

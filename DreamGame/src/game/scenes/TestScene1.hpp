@@ -1,8 +1,11 @@
 ﻿#pragma once
 
-#include "Scene.hpp"
+#include "../../engine/Engine.hpp"
 
-class TestScene2 final : public Scene {
+class TestScene1 : public Scene {
+	private:
+		Texture2D texture;
+	
 	protected:
 		void Start() override;
 		void Update() override;
@@ -10,5 +13,6 @@ class TestScene2 final : public Scene {
 		void Stop() override;
 
 	public:
+	explicit TestScene1(const std::string& name);
 		using Scene::Scene;
 };

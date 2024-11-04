@@ -1,6 +1,6 @@
 ﻿#pragma once
 
-#include "GameObject.hpp"
+#include "../../engine/Engine.hpp"
 
 class Player final : public GameObject {
 	private:

@@ -1,7 +1,7 @@
 ﻿#include "ObjectManager.hpp"
 
 void ObjectManager::Sort() {
-	for (int i = (int)sorted.size() - 1; i >= 0; i--) {
+	for (int i = sorted.size() - 1; i >= 0; i--) {
 		GameObject* current = sorted[i];
 
 		if (current == nullptr) {
@@ -20,7 +20,6 @@ void ObjectManager::Sort() {
 			}
 
 			if (next->GetPriority() < current->GetPriority()) {
-
 				sorted[j] = current;
 				sorted[i] = next;
 			}
@@ -29,13 +28,13 @@ void ObjectManager::Sort() {
 }
 
 void ObjectManager::Update() {
-	for (auto& a : sorted) {
-		a->Update();
+	for (const auto& object : sorted) {
+		object->Update();
 	}
 }
 
 void ObjectManager::Render() {
-	for (auto& a : sorted) {
-		a->Render();
+	for (const auto& object : sorted) {
+		object->Render();
 	}
 }

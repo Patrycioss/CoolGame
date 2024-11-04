@@ -4,12 +4,8 @@
 #include <raylib.h>
 #include <vector>
 
-#include "MovableCamera.hpp"
-#include "ObjectManager.hpp"
-#include "Window.hpp"
-#include "objects/GameObject.hpp"
+#include "../engine/Engine.hpp"
 #include "objects/Player.hpp"
-#include "scenes/SceneManager.hpp"
 
 class Game {
 	private:

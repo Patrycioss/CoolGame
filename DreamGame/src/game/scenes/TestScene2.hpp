@@ -1,12 +1,8 @@
 ﻿#pragma once
 
-#include "raylib.h"
-#include "Scene.hpp"
+#include "../../engine/Engine.hpp"
 
-class TestScene1 : public Scene {
-	private:
-		Texture2D texture;
-	
+class TestScene2 final : public Scene {
 	protected:
 		void Start() override;
 		void Update() override;
@@ -14,6 +10,5 @@ class TestScene1 : public Scene {
 		void Stop() override;
 
 	public:
-	explicit TestScene1(const std::string& name);
 		using Scene::Scene;
 };

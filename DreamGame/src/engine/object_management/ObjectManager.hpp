@@ -4,8 +4,8 @@
 #include <unordered_map>
 #include <vector>
 
-#include "objects/GameObject.hpp"
-#include "utils/Concepts.hpp"
+#include "../GameObject.hpp"
+#include "../utils/Concepts.hpp"
 
 class ObjectManager {
 	private:
@@ -20,6 +20,14 @@ class ObjectManager {
 			T* ptr = static_cast<T*>(pair.first->second.get());
 			sorted.push_back(ptr);
 			return ptr;
+		}
+
+		template<Concepts::Derived<GameObject> T>
+		T* Get(const unsigned int ID) {
+			if (!objectMap.contains(ID)) {
+				return nullptr;
+			}
+			return static_cast<T*>(objectMap[ID].get());
 		}
 
 		void Sort();

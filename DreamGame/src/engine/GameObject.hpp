@@ -1,6 +1,6 @@
 ﻿#pragma once
 #include <raylib.h>
-#include "../Collider.hpp"
+#include "Collider.hpp"
 
 class ObjectManager;
 
