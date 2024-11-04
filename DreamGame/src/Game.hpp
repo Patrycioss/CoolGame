@@ -5,6 +5,7 @@
 #include <vector>
 
 #include "MovableCamera.hpp"
+#include "ObjectManager.hpp"
 #include "Window.hpp"
 #include "objects/GameObject.hpp"
 #include "scenes/SceneManager.hpp"
@@ -16,6 +17,7 @@ class Game {
 		int counter = 0;
 
 		SceneManager sceneManager;
+		ObjectManager objectManager;
 
 		std::vector<std::unique_ptr<GameObject>> gameObjects;
 

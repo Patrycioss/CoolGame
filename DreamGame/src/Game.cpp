@@ -20,10 +20,12 @@ Game::Game()
 
 	InitAudioDevice();
 
-	sceneManager.AddScene<TestScene1>("TestScene1");
-	sceneManager.AddScene<TestScene2>("TestScene2");
+	objectManager.Add<Player>(Vector2{200,200});
 
-	sceneManager.SetScene("TestScene1");
+	// sceneManager.AddScene<TestScene1>("TestScene1");
+	// sceneManager.AddScene<TestScene2>("TestScene2");
+
+	// sceneManager.SetScene("TestScene1");
 }
 
 Game::~Game() {
@@ -46,7 +48,8 @@ void Game::Update() {
 	// }
 
 	window.Update();
-	sceneManager.Update();
+	objectManager.Update();
+	// sceneManager.Update();
 
 	ClearBackground(WHITE);
 	BeginTextureMode(renderTexture);
@@ -56,7 +59,8 @@ void Game::Update() {
 	camera.Begin();
 
 	// Rendering
-	sceneManager.Render();
+	// sceneManager.Render();
+	objectManager.Render();
 
 	camera.End();
 	EndTextureMode();
