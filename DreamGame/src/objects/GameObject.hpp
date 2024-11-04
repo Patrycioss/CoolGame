@@ -33,4 +33,7 @@ class GameObject {
 
 		[[nodiscard]] unsigned int GetID() const;
 		[[nodiscard]] int GetPriority() const;
+
+		void SetPriority(int priority);
+
 };

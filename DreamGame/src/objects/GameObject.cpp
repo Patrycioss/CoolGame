@@ -36,3 +36,7 @@ unsigned int GameObject::GetID() const {
 int GameObject::GetPriority() const {
 	return priority;
 }
+
+void GameObject::SetPriority(const int priority) {
+	this->priority = priority;
+}

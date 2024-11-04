@@ -8,6 +8,7 @@
 #include "ObjectManager.hpp"
 #include "Window.hpp"
 #include "objects/GameObject.hpp"
+#include "objects/Player.hpp"
 #include "scenes/SceneManager.hpp"
 
 class Game {
@@ -24,6 +25,11 @@ class Game {
 		Window window;
 		RenderTexture2D renderTexture;
 		MovableCamera camera;
+
+		Player* player1 = nullptr;
+		Player* player2 = nullptr;
+		Player* player3 = nullptr;
+		Player* player4 = nullptr;
 
 	public:
 		bool enableDebugging = true;

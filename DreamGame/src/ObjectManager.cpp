@@ -2,16 +2,17 @@
 
 void ObjectManager::Sort() {
 	for (int i = (int)sorted.size() - 1; i >= 0; i--) {
-		GameObject*& current = sorted[i];
+		GameObject* current = sorted[i];
 
 		if (current == nullptr) {
 			sorted.erase(sorted.begin() + i);
+			continue;
 		}
 
 		int j = i - 1;
 
 		if (j >= 0) {
-			GameObject*& next = sorted[j];
+			GameObject* next = sorted[j];
 
 			if (next == nullptr) {
 				sorted.erase(sorted.begin() + j);
@@ -19,7 +20,9 @@ void ObjectManager::Sort() {
 			}
 
 			if (next->GetPriority() < current->GetPriority()) {
-				std::swap(next, current);
+
+				sorted[j] = current;
+				sorted[i] = next;
 			}
 		}
 	}

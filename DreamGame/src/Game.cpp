@@ -20,7 +20,16 @@ Game::Game()
 
 	InitAudioDevice();
 
-	objectManager.Add<Player>(Vector2{200,200});
+	std::srand(std::time(nullptr));
+
+	player1 = objectManager.Add<Player>(Vector2{100, 100}, std::rand(), WHITE);
+	player2 = objectManager.Add<Player>(Vector2{200, 100}, std::rand(), GREEN);
+	player3 = objectManager.Add<Player>(Vector2{100, 200}, std::rand(), BLUE);
+	player4 = objectManager.Add<Player>(Vector2{200, 200}, std::rand(), RED);
+
+	printf("%i, %i, %i, %i", player1->GetPriority(), player2->GetPriority(), player3->GetPriority(), player4->GetPriority());
+
+	objectManager.Sort();
 
 	// sceneManager.AddScene<TestScene1>("TestScene1");
 	// sceneManager.AddScene<TestScene2>("TestScene2");
@@ -35,17 +44,33 @@ Game::~Game() {
 }
 
 void Game::Update() {
-	// counter++;
-	//
-	// if (counter > 100) {
-	// 	counter = 0;
-	//
-	// 	if (sceneManager.ActiveScene()->Name() == "TestScene1") {
-	// 		sceneManager.SetScene("TestScene2");
-	// 	} else {
-	// 		sceneManager.SetScene("TestScene1");
-	// 	}
-	// }
+	counter++;
+
+	if (counter > 100) {
+		counter = 0;
+
+		// player1->SetPriority(std::rand());
+		// player2->SetPriority(std::rand());
+		// player3->SetPriority(std::rand());
+		// player4->SetPriority(std::rand());
+
+		// if (player1->GetPriority() == 0) {
+		// 	player1->SetPriority(1000);
+		// 	player2->SetPriority(0);
+		// }
+		// else {
+		// 	player1->SetPriority(0);
+		// 	player2->SetPriority(1000);
+		// }
+
+		objectManager.Sort();
+
+		// if (sceneManager.ActiveScene()->Name() == "TestScene1") {
+		// 	sceneManager.SetScene("TestScene2");
+		// } else {
+		// 	sceneManager.SetScene("TestScene1");
+		// }
+	}
 
 	window.Update();
 	objectManager.Update();
