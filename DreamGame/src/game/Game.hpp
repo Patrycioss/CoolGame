@@ -1,6 +1,5 @@
 ﻿#pragma once
 #include <memory>
-#include <mutex>
 #include <raylib.h>
 #include <vector>
 
@@ -16,7 +15,7 @@ class Game {
 		SceneManager sceneManager;
 		ObjectManager objectManager;
 
-		std::vector<std::unique_ptr<GameObject>> gameObjects;
+		std::vector<std::unique_ptr<Object>> gameObjects;
 
 		Window window;
 		RenderTexture2D renderTexture;

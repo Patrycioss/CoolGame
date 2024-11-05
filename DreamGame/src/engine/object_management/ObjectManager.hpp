@@ -4,16 +4,16 @@
 #include <unordered_map>
 #include <vector>
 
-#include "../GameObject.hpp"
+#include "../Object.hpp"
 #include "../utils/Concepts.hpp"
 
 class ObjectManager {
 	private:
-		std::unordered_map<unsigned int, std::unique_ptr<GameObject>> objectMap;
-		std::vector<GameObject*> sorted;
+		std::unordered_map<unsigned int, std::unique_ptr<Object>> objectMap;
+		std::vector<Object*> sorted;
 
 	public:
-		template<Concepts::Derived<GameObject> T, typename... Args>
+		template<Concepts::Derived<Object> T, typename... Args>
 		T* Add(Args... args) {
 			auto a = std::unique_ptr<T>(new T(std::move(args)...));
 			auto pair = objectMap.emplace(a->GetID(), std::move(a));
@@ -22,7 +22,7 @@ class ObjectManager {
 			return ptr;
 		}
 
-		template<Concepts::Derived<GameObject> T>
+		template<Concepts::Derived<Object> T>
 		T* Get(const unsigned int ID) {
 			if (!objectMap.contains(ID)) {
 				return nullptr;

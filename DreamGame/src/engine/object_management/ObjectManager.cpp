@@ -2,7 +2,7 @@
 
 void ObjectManager::Sort() {
 	for (int i = sorted.size() - 1; i >= 0; i--) {
-		GameObject* current = sorted[i];
+		Object* current = sorted[i];
 
 		if (current == nullptr) {
 			sorted.erase(sorted.begin() + i);
@@ -12,7 +12,7 @@ void ObjectManager::Sort() {
 		int j = i - 1;
 
 		if (j >= 0) {
-			GameObject* next = sorted[j];
+			Object* next = sorted[j];
 
 			if (next == nullptr) {
 				sorted.erase(sorted.begin() + j);

@@ -4,7 +4,7 @@
 
 class ObjectManager;
 
-class GameObject {
+class Object {
 	friend ObjectManager;
 
 	private:
@@ -26,8 +26,8 @@ class GameObject {
 		Vector2 scale;
 		float rotation;
 
-		virtual ~GameObject() = default;
-		explicit GameObject(const Vector2& position, int priority);
+		virtual ~Object() = default;
+		explicit Object(const Vector2& position, int priority);
 
 		[[nodiscard]] const Collider& Collider() const;
 

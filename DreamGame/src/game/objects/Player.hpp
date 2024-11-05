@@ -2,7 +2,7 @@
 
 #include "../../engine/Engine.hpp"
 
-class Player final : public GameObject {
+class Player final : public Object {
 	private:
 		Texture texture;
 		Color color;

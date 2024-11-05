@@ -8,6 +8,6 @@ void Player::Render() {
 }
 
 Player::Player(const Vector2& position, const int priority, const Color& color)
-	: GameObject(position, priority), texture(LoadTexture((std::string(RESOURCES) + "/textures/awesomeface.png").c_str())),
+	: Object(position, priority), texture(LoadTexture((std::string(RESOURCES) + "/textures/awesomeface.png").c_str())),
 	  color(color) {
 }
