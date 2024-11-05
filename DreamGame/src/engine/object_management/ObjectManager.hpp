@@ -18,6 +18,7 @@ class ObjectManager {
 			auto a = std::unique_ptr<T>(new T(std::move(args)...));
 			auto pair = objectMap.emplace(a->GetID(), std::move(a));
 			T* ptr = static_cast<T*>(pair.first->second.get());
+			ptr->InternalSetManager(this);
 			sorted.push_back(ptr);
 			return ptr;
 		}
@@ -28,6 +29,13 @@ class ObjectManager {
 				return nullptr;
 			}
 			return static_cast<T*>(objectMap[ID].get());
+		}
+
+		Object* Get(const unsigned int ID) {
+			if (!objectMap.contains(ID)) {
+				return nullptr;
+			}
+			return objectMap[ID].get();
 		}
 
 		bool Remove(unsigned ID);

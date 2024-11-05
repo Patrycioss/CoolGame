@@ -1,5 +1,12 @@
 ﻿#include "TestScene2.hpp"
 
+#include "../objects/Player.hpp"
+
+TestScene2::TestScene2(const std::string& name)
+	: Scene(name) {
+	Add<Player>(Vector2{200, 200}, 10, WHITE);
+}
+
 void TestScene2::Start() {
 }
 

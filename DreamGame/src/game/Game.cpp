@@ -3,6 +3,7 @@
 
 #include "objects/Player.hpp"
 #include "scenes/TestScene1.hpp"
+#include "scenes/TestScene2.hpp"
 
 Game* Game::instance;
 
@@ -23,7 +24,7 @@ Game::Game()
 
 	instance = this;
 
-	sceneManager.AddScene<TestScene1>("TestScene1");
+	sceneManager.AddScene<TestScene2>("TestScene1");
 	sceneManager.SetScene("TestScene1");
 
 	InitAudioDevice();

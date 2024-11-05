@@ -15,6 +15,8 @@ void Scene::InternalStart() {
 }
 
 void Scene::InternalUpdate() {
+	objectManager.Update();
+
 	Update();
 
 	if (logUpdate) {

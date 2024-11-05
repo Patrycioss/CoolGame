@@ -10,5 +10,5 @@ class TestScene2 final : public Scene {
 		void Stop() override;
 
 	public:
-		using Scene::Scene;
+		explicit TestScene2(const std::string& name);
 };
