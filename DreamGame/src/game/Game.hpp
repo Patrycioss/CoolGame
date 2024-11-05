@@ -10,8 +10,6 @@ class Game {
 	private:
 		static Game* instance;
 
-		int counter = 0;
-
 		SceneManager sceneManager;
 		ObjectManager objectManager;
 
@@ -29,7 +27,6 @@ class Game {
 	public:
 		bool enableDebugging = true;
 
-	
 		Game();
 		~Game();
 		Game(Game const&) = delete;

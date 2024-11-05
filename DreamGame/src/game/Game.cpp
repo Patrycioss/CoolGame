@@ -1,9 +1,5 @@
 ﻿#include "Game.hpp"
 #include <string>
-#include <mutex>
-
-#include "scenes/TestScene1.hpp"
-#include "scenes/TestScene2.hpp"
 
 #include "objects/Player.hpp"
 
@@ -21,25 +17,12 @@ Game::Game()
 
 	InitAudioDevice();
 
-	std::srand(std::time(nullptr));
-
-	// player1 = objectManager.Add<Player>(Vector2{100, 100}, std::rand(), WHITE);
 	player1 = objectManager.Add<Player>(Vector2{100, 100}, 0, WHITE);
-	// player2 = objectManager.Add<Player>(Vector2{200, 100}, std::rand(), GREEN);
 	player2 = objectManager.Add<Player>(Vector2{200, 100}, 3, GREEN);
-	// player3 = objectManager.Add<Player>(Vector2{100, 200}, std::rand(), BLUE);
 	player3 = objectManager.Add<Player>(Vector2{100, 200}, 1, BLUE);
-	// player4 = objectManager.Add<Player>(Vector2{200, 200}, std::rand(), RED);
 	player4 = objectManager.Add<Player>(Vector2{200, 200}, 2, RED);
 
-	printf("white: %i, green: %i, blue: %i, red: %i\n", player1->GetPriority(), player2->GetPriority(), player3->GetPriority(), player4->GetPriority());
-
 	objectManager.Sort();
-
-	// sceneManager.AddScene<TestScene1>("TestScene1");
-	// sceneManager.AddScene<TestScene2>("TestScene2");
-
-	// sceneManager.SetScene("TestScene1");
 }
 
 Game::~Game() {
@@ -49,37 +32,8 @@ Game::~Game() {
 }
 
 void Game::Update() {
-	counter++;
-
-	if (counter > 100) {
-		counter = 0;
-
-		// player1->SetPriority(std::rand());
-		// player2->SetPriority(std::rand());
-		// player3->SetPriority(std::rand());
-		// player4->SetPriority(std::rand());
-
-		// if (player1->GetPriority() == 0) {
-		// 	player1->SetPriority(1000);
-		// 	player2->SetPriority(0);
-		// }
-		// else {
-		// 	player1->SetPriority(0);
-		// 	player2->SetPriority(1000);
-		// }
-
-		// objectManager.Sort();
-
-		// if (sceneManager.ActiveScene()->Name() == "TestScene1") {
-		// 	sceneManager.SetScene("TestScene2");
-		// } else {
-		// 	sceneManager.SetScene("TestScene1");
-		// }
-	}
-
 	window.Update();
 	objectManager.Update();
-	// sceneManager.Update();
 
 	ClearBackground(WHITE);
 	BeginTextureMode(renderTexture);
@@ -89,7 +43,6 @@ void Game::Update() {
 	camera.Begin();
 
 	// Rendering
-	// sceneManager.Render();
 	objectManager.Render();
 
 	camera.End();

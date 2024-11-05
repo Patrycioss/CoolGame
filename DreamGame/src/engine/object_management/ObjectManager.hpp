@@ -30,6 +30,8 @@ class ObjectManager {
 			return static_cast<T*>(objectMap[ID].get());
 		}
 
+		bool Remove(unsigned ID);
+
 		void Sort();
 		void Update();
 		void Render();

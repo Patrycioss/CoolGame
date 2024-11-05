@@ -1,10 +1,18 @@
 ﻿#include "ObjectManager.hpp"
 
+bool ObjectManager::Remove(const unsigned ID) {
+	int objectCount = (int)objectMap.size();
+	bool success = objectMap.erase(ID) > 0;
+
+	if (success) {
+		printf("Successfully removed! Object count before remove: %i, after: %i\n", objectCount, (int)objectMap.size());
+	}
+	return success;
+}
+
 void ObjectManager::Sort() {
 	for (int i = (int)sorted.size() - 1; i >= 0; i--) {
-
 		if (sorted[i] == nullptr) {
-			printf("currentnull\n");
 			sorted.erase(sorted.begin() + i);
 			continue;
 		}
@@ -14,13 +22,11 @@ void ObjectManager::Sort() {
 			Object* next = sorted[j];
 
 			if (next == nullptr) {
-				printf("nextnull\n");
 				sorted.erase(sorted.begin() + j);
 				continue;
 			}
 
 			if (current->GetID() == next->GetID()) {
-				printf("currentisnext\n");
 				continue;
 			}
 
@@ -30,6 +36,8 @@ void ObjectManager::Sort() {
 			}
 		}
 	}
+
+	printf("Sorted objects, size of list: %i\n", (int)sorted.size());
 }
 
 void ObjectManager::Update() {
