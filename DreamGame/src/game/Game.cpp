@@ -7,14 +7,20 @@
 Game* Game::instance;
 
 Game::Game()
-	:
-window({1280, 720}, false),
+	: window({1280, 720}, false),
 	  renderTexture(LoadRenderTexture(static_cast<int>(window.Resolution().x), static_cast<int>(window.Resolution().y))),
 	  camera(
 		  {window.Resolution().x / 2.0f, window.Resolution().y / 2.0f},
 		  {window.Size().x / 2.0f, window.Size().y / 2.0f},
 		  0,
-		  1) {
+		  1
+	  ) {
+	if (instance != nullptr) {
+		BEGIN_ERROR();
+		LOG << "Game constructor called more than once!";
+		END();
+	}
+
 	instance = this;
 
 	sceneManager.AddScene<TestScene1>("TestScene1");
@@ -61,6 +67,8 @@ void Game::Update() {
 	               WHITE);
 
 	EndDrawing();
+
+	Logger::Print();
 }
 
 Game& Game::Instance() {

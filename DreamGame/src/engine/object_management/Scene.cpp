@@ -8,7 +8,9 @@ void Scene::InternalStart() {
 	Sort();
 
 	if (logStartStop) {
-		Logger::Log("Starting Scene: " + name, __FILE_NAME__, __LINE__);
+		BEGIN_LOG();
+		LOG << "Starting Scene: " << name;
+		END();
 	}
 }
 
@@ -16,7 +18,9 @@ void Scene::InternalUpdate() {
 	Update();
 
 	if (logUpdate) {
-		Logger::Log("Updating Scene: " + name, __FILE_NAME__, __LINE__);
+		BEGIN_LOG();
+		LOG << "Updating Scene: " << name;
+		END();
 	}
 }
 
@@ -26,7 +30,9 @@ void Scene::InternalRender() {
 	Render();
 
 	if (logRender) {
-		Logger::Log("Rendering Scene: " + name, __FILE__, __LINE__);
+		BEGIN_LOG();
+		LOG << "Rendering Scene: " << name;
+		END();
 	}
 }
 
@@ -34,7 +40,9 @@ void Scene::InternalStop() {
 	Stop();
 
 	if (logStartStop) {
-		Logger::Log("Stopping Scene: " + name, __FILE_NAME__, __LINE__);
+		BEGIN_LOG();
+		LOG << "Stopping Scene: " << name;
+		END();
 	}
 }
 

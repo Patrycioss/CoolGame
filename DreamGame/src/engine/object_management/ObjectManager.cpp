@@ -1,11 +1,14 @@
 ﻿#include "ObjectManager.hpp"
+#include "../utils/Logger.hpp"
 
 bool ObjectManager::Remove(const unsigned ID) {
 	int objectCount = (int)objectMap.size();
 	bool success = objectMap.erase(ID) > 0;
 
 	if (success) {
-		printf("Successfully removed! Object count before remove: %i, after: %i\n", objectCount, (int)objectMap.size());
+		BEGIN_LOG();
+		LOG << "Successfully removed! Object count before remove: " << objectCount;
+		LOG << ", after: " << (int) objectMap.size();
 	}
 	return success;
 }
@@ -37,7 +40,9 @@ void ObjectManager::Sort() {
 		}
 	}
 
-	printf("Sorted objects, size of list: %i\n", (int)sorted.size());
+	BEGIN_LOG();
+	LOG << "Sorted objects, size of list: " << (int)sorted.size();
+	END();
 }
 
 void ObjectManager::Update() {
