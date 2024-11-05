@@ -11,7 +11,6 @@ class Game {
 		static Game* instance;
 
 		SceneManager sceneManager;
-		ObjectManager objectManager;
 
 		std::vector<std::unique_ptr<Object>> gameObjects;
 
@@ -19,11 +18,7 @@ class Game {
 		RenderTexture2D renderTexture;
 		MovableCamera camera;
 
-		Player* player1 = nullptr;
-		Player* player2 = nullptr;
-		Player* player3 = nullptr;
-		Player* player4 = nullptr;
-
+		
 	public:
 		bool enableDebugging = true;
 

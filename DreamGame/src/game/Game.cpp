@@ -2,6 +2,7 @@
 #include <string>
 
 #include "objects/Player.hpp"
+#include "scenes/TestScene1.hpp"
 
 Game* Game::instance;
 
@@ -15,14 +16,12 @@ Game::Game()
 		  1) {
 	instance = this;
 
+	sceneManager.AddScene<TestScene1>("TestScene1");
+	sceneManager.SetScene("TestScene1");
+
 	InitAudioDevice();
 
-	player1 = objectManager.Add<Player>(Vector2{100, 100}, 0, WHITE);
-	player2 = objectManager.Add<Player>(Vector2{200, 100}, 3, GREEN);
-	player3 = objectManager.Add<Player>(Vector2{100, 200}, 1, BLUE);
-	player4 = objectManager.Add<Player>(Vector2{200, 200}, 2, RED);
-
-	objectManager.Sort();
+	
 }
 
 Game::~Game() {
@@ -33,7 +32,7 @@ Game::~Game() {
 
 void Game::Update() {
 	window.Update();
-	objectManager.Update();
+	sceneManager.Update();
 
 	ClearBackground(WHITE);
 	BeginTextureMode(renderTexture);
@@ -43,7 +42,7 @@ void Game::Update() {
 	camera.Begin();
 
 	// Rendering
-	objectManager.Render();
+	sceneManager.Render();
 
 	camera.End();
 	EndTextureMode();

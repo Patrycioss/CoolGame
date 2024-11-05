@@ -5,6 +5,8 @@
 void Scene::InternalStart() {
 	Start();
 
+	Sort();
+
 	if (logStartStop) {
 		Logger::Log("Starting Scene: " + name, __FILE_NAME__, __LINE__);
 	}
@@ -19,6 +21,8 @@ void Scene::InternalUpdate() {
 }
 
 void Scene::InternalRender() {
+	objectManager.Render();
+
 	Render();
 
 	if (logRender) {
@@ -35,7 +39,6 @@ void Scene::InternalStop() {
 }
 
 void Scene::Start() {
-	
 }
 
 void Scene::Update() {
@@ -53,6 +56,14 @@ Scene::Scene(const std::string& name) {
 
 const std::string& Scene::Name() {
 	return name;
+}
+
+bool Scene::Remove(unsigned ID) {
+	return objectManager.Remove(ID);
+}
+
+void Scene::Sort() {
+	objectManager.Sort();
 }
 
 void Scene::LogStartStop(const bool value) {
