@@ -82,7 +82,7 @@ void Object::SetParent(const int parentID) {
 
 void Object::AddChild(const int id) {
 	auto alreadyAdded = std::find(children.begin(), children.end(), id);
-	if (alreadyAdded == children.end()) {
+	if (alreadyAdded != children.end()) {
 		BEGIN_ERROR();
 		LOG << "Object with id: " << id << " already has child with id: " << id;
 		END();

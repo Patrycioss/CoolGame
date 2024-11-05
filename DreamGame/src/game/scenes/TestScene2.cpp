@@ -2,9 +2,14 @@
 
 #include "../objects/Player.hpp"
 
+#include "../objects/TestChild.hpp"
+
 TestScene2::TestScene2(const std::string& name)
 	: Scene(name) {
-	Add<Player>(Vector2{200, 200}, 10, WHITE);
+	Player* player = Add<Player>(Vector2{200, 200}, 10, WHITE);
+	TestChild* child = Add<TestChild>(Vector2{400,400}, 20, RED);
+
+	player->AddChild(child->GetID());
 }
 
 void TestScene2::Start() {

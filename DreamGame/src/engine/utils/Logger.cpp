@@ -24,9 +24,8 @@ void Logger::Print() {
 	std::cout << logStream.str();
 
 	if (hasError) {
-		std::cerr << errorStream.str();
+		std::cerr << errorStream.str() << std::endl;
 		errorStream.clear();
-		std::cout << std::endl;
 	}
 
 	logStream.clear();
