@@ -11,7 +11,7 @@ static void Update() {
 
 #endif
 
-constexpr int TARGET_FPS = 60;
+constexpr int TARGET_FPS = 165;
 
 int main() {
 
