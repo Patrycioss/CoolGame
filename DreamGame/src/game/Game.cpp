@@ -1,5 +1,6 @@
 ﻿#include "Game.hpp"
 #include <string>
+#include <mutex>
 
 #include "scenes/TestScene1.hpp"
 #include "scenes/TestScene2.hpp"
@@ -22,12 +23,16 @@ Game::Game()
 
 	std::srand(std::time(nullptr));
 
-	player1 = objectManager.Add<Player>(Vector2{100, 100}, std::rand(), WHITE);
-	player2 = objectManager.Add<Player>(Vector2{200, 100}, std::rand(), GREEN);
-	player3 = objectManager.Add<Player>(Vector2{100, 200}, std::rand(), BLUE);
-	player4 = objectManager.Add<Player>(Vector2{200, 200}, std::rand(), RED);
+	// player1 = objectManager.Add<Player>(Vector2{100, 100}, std::rand(), WHITE);
+	player1 = objectManager.Add<Player>(Vector2{100, 100}, 0, WHITE);
+	// player2 = objectManager.Add<Player>(Vector2{200, 100}, std::rand(), GREEN);
+	player2 = objectManager.Add<Player>(Vector2{200, 100}, 3, GREEN);
+	// player3 = objectManager.Add<Player>(Vector2{100, 200}, std::rand(), BLUE);
+	player3 = objectManager.Add<Player>(Vector2{100, 200}, 1, BLUE);
+	// player4 = objectManager.Add<Player>(Vector2{200, 200}, std::rand(), RED);
+	player4 = objectManager.Add<Player>(Vector2{200, 200}, 2, RED);
 
-	printf("%i, %i, %i, %i", player1->GetPriority(), player2->GetPriority(), player3->GetPriority(), player4->GetPriority());
+	printf("white: %i, green: %i, blue: %i, red: %i\n", player1->GetPriority(), player2->GetPriority(), player3->GetPriority(), player4->GetPriority());
 
 	objectManager.Sort();
 
@@ -63,7 +68,7 @@ void Game::Update() {
 		// 	player2->SetPriority(1000);
 		// }
 
-		objectManager.Sort();
+		// objectManager.Sort();
 
 		// if (sceneManager.ActiveScene()->Name() == "TestScene1") {
 		// 	sceneManager.SetScene("TestScene2");

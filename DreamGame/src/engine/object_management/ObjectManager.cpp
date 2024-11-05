@@ -1,21 +1,26 @@
 ﻿#include "ObjectManager.hpp"
 
 void ObjectManager::Sort() {
-	for (int i = sorted.size() - 1; i >= 0; i--) {
-		Object* current = sorted[i];
+	for (int i = (int)sorted.size() - 1; i >= 0; i--) {
 
-		if (current == nullptr) {
+		if (sorted[i] == nullptr) {
+			printf("currentnull\n");
 			sorted.erase(sorted.begin() + i);
 			continue;
 		}
 
-		int j = i - 1;
-
-		if (j >= 0) {
+		for (int j = i - 1; j >= 0; j--) {
+			Object* current = sorted[i];
 			Object* next = sorted[j];
 
 			if (next == nullptr) {
+				printf("nextnull\n");
 				sorted.erase(sorted.begin() + j);
+				continue;
+			}
+
+			if (current->GetID() == next->GetID()) {
+				printf("currentisnext\n");
 				continue;
 			}
 
