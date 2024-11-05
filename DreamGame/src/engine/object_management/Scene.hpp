@@ -4,8 +4,10 @@
 
 #include "ObjectManager.hpp"
 
+class SceneManager;
+
 class Scene {
-	friend class SceneManager;
+	friend SceneManager;
 
 	private:
 		std::string name;
@@ -42,12 +44,12 @@ class Scene {
 
 		bool Remove(unsigned ID);
 		void Sort();
+	
+		[[nodiscard]] const std::string& GetName() const;
 
 		void LogStartStop(bool value);
 		void LogUpdate(bool value);
 		void LogRender(bool value);
 
-		const std::string& Name();
-
-		~Scene();
+		virtual ~Scene() = default;
 };

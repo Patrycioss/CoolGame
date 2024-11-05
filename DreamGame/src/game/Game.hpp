@@ -1,24 +1,18 @@
 ﻿#pragma once
-#include <memory>
 #include <raylib.h>
-#include <vector>
 
+#include "../engine/object_management/Scene.hpp"
 #include "../engine/Engine.hpp"
-#include "objects/Player.hpp"
 
 class Game {
 	private:
 		static Game* instance;
 
 		SceneManager sceneManager;
-
-		std::vector<std::unique_ptr<Object>> gameObjects;
-
 		Window window;
 		RenderTexture2D renderTexture;
 		MovableCamera camera;
 
-		
 	public:
 		bool enableDebugging = true;
 
