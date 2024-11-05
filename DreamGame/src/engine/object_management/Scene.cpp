@@ -50,20 +50,20 @@ void Scene::Render() {
 void Scene::Stop() {
 }
 
-Scene::Scene(const std::string& name) {
-	this->name = name;
+Scene::Scene(const std::string& name)
+	: name(name) {
 }
 
-const std::string& Scene::Name() {
-	return name;
-}
-
-bool Scene::Remove(unsigned ID) {
+bool Scene::Remove(const unsigned ID) {
 	return objectManager.Remove(ID);
 }
 
 void Scene::Sort() {
 	objectManager.Sort();
+}
+
+const std::string& Scene::GetName() const {
+	return name;
 }
 
 void Scene::LogStartStop(const bool value) {
@@ -77,6 +77,3 @@ void Scene::LogUpdate(const bool value) {
 void Scene::LogRender(const bool value) {
 	this->logRender = value;
 }
-
-Scene::~Scene() {
-};

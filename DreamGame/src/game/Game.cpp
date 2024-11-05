@@ -7,7 +7,8 @@
 Game* Game::instance;
 
 Game::Game()
-	: window({1280, 720}, false),
+	:
+window({1280, 720}, false),
 	  renderTexture(LoadRenderTexture(static_cast<int>(window.Resolution().x), static_cast<int>(window.Resolution().y))),
 	  camera(
 		  {window.Resolution().x / 2.0f, window.Resolution().y / 2.0f},
@@ -20,8 +21,6 @@ Game::Game()
 	sceneManager.SetScene("TestScene1");
 
 	InitAudioDevice();
-
-	
 }
 
 Game::~Game() {
@@ -43,7 +42,6 @@ void Game::Update() {
 
 	// Rendering
 	sceneManager.Render();
-
 	camera.End();
 	EndTextureMode();
 
@@ -63,8 +61,6 @@ void Game::Update() {
 	               WHITE);
 
 	EndDrawing();
-
-	Logger::Print();
 }
 
 Game& Game::Instance() {

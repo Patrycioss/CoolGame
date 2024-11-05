@@ -3,7 +3,6 @@
 #include "../../engine/Engine.hpp"
 #include "../objects/Player.hpp"
 
-
 class TestScene1 : public Scene {
 	private:
 		Texture2D texture;
