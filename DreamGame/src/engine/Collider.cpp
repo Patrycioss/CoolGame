@@ -1,18 +1,18 @@
 ﻿#include "Collider.hpp"
 
-#include "objects/GameObject.hpp"
+#include "Object.hpp"
 
-Collider::Collider(GameObject& gameObject, const float radius): owner(gameObject), type(Type::Circle), radius(radius) {
+Collider::Collider(Object& gameObject, const float radius): owner(gameObject), type(Type::Circle), radius(radius) {
 }
 
-Collider::Collider(GameObject& gameObject, const Vector2& size): owner(gameObject), type(Type::Rectangle), width(size.x), height(size.y) {
+Collider::Collider(Object& gameObject, const Vector2& size): owner(gameObject), type(Type::Rectangle), width(size.x), height(size.y) {
 }
 
 const enum Collider::Type& Collider::Type() const {
 	return type;
 }
 
-GameObject& Collider::Owner() const {
+Object& Collider::Owner() const {
 	return owner;
 }
 

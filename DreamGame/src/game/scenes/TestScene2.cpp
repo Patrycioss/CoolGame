@@ -1,7 +1,5 @@
 ﻿#include "TestScene2.hpp"
 
-#include "raylib.h"
-
 void TestScene2::Start() {
 }
 

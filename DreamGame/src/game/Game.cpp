@@ -1,10 +1,8 @@
 ﻿#include "Game.hpp"
 #include <string>
 
-#include "scenes/TestScene1.hpp"
-#include "scenes/TestScene2.hpp"
-
 #include "objects/Player.hpp"
+#include "scenes/TestScene1.hpp"
 
 Game* Game::instance;
 
@@ -18,12 +16,12 @@ Game::Game()
 		  1) {
 	instance = this;
 
+	sceneManager.AddScene<TestScene1>("TestScene1");
+	sceneManager.SetScene("TestScene1");
+
 	InitAudioDevice();
 
-	sceneManager.AddScene<TestScene1>("TestScene1");
-	sceneManager.AddScene<TestScene2>("TestScene2");
-
-	sceneManager.SetScene("TestScene1");
+	
 }
 
 Game::~Game() {
@@ -33,18 +31,6 @@ Game::~Game() {
 }
 
 void Game::Update() {
-	// counter++;
-	//
-	// if (counter > 100) {
-	// 	counter = 0;
-	//
-	// 	if (sceneManager.ActiveScene()->Name() == "TestScene1") {
-	// 		sceneManager.SetScene("TestScene2");
-	// 	} else {
-	// 		sceneManager.SetScene("TestScene1");
-	// 	}
-	// }
-
 	window.Update();
 	sceneManager.Update();
 

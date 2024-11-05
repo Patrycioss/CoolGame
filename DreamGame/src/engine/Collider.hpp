@@ -5,7 +5,7 @@
 
 #include "raymath.h"
 
-class GameObject;
+class Object;
 
 class Collider {
 	public:
@@ -15,19 +15,19 @@ class Collider {
 		};
 
 	private:
-		GameObject& owner;
+		Object& owner;
 		const Type type;
 
 	public:
-		explicit Collider(GameObject& gameObject, float radius);
-		explicit Collider(GameObject& gameObject, const Vector2& size);
+		explicit Collider(Object& gameObject, float radius);
+		explicit Collider(Object& gameObject, const Vector2& size);
 
 		[[nodiscard]] const Type& Type() const;
 
 		float width{};
 		float height{};
 		float radius{};
-		[[nodiscard]] GameObject& Owner() const;
+		[[nodiscard]] Object& Owner() const;
 
 		void DebugRender(const Color& color) const;
 

@@ -1,6 +1,6 @@
 ﻿#include <raylib.h>
 
-#include "Game.hpp"
+#include "game/Game.hpp"
 
 #if defined(PLATFORM_WEB)
 #include <emscripten/emscripten.h>
