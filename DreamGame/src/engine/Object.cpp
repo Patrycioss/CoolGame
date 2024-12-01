@@ -1,10 +1,10 @@
 ﻿#include "Object.hpp"
 
+#include "../../cmake-build-build-web/_deps/raylib-src/src/raymath.h"
 #include "object_management/ObjectManager.hpp"
 #include "utils/Logger.hpp"
 #include "utils/Vector2Extensions.hpp"
-
-int Object::lastID = 0;
+#include "utils/MatrixExtensions.hpp"
 
 void Object::InternalSetManager(ObjectManager* manager) {
 	objectManager = manager;
@@ -18,13 +18,78 @@ void Object::InternalRender() {
 	Render();
 }
 
-Object::Object(const Vector2& position, const int priority)
+void Object::RecalculateTransform(const Matrix& parentMatrix) {
+	// BEGIN_LOG();
+	// LOG << GetName() << "Local position: " << localPosition;
+	// END();
+	Matrix modelMatrix = MatrixMultiply(parentMatrix, MatrixTranslate(localPosition.x, localPosition.y, 0));
+	modelMatrix = MatrixMultiply(modelMatrix, MatrixRotate({0, 0, 1}, localRotation));
+	modelMatrix = MatrixMultiply(modelMatrix, MatrixScale(localScale.x, localScale.y, 1));
+
+	worldPosition = Vector2{modelMatrix.m3, modelMatrix.m7};
+
+	// BEGIN_LOG();
+	// LOG << GetName() << ":\n";
+	// LOG << "Local rotation: " << localRotation << "\n";
+	// LOG << "World position: " << worldPosition << "\n"; //<< ", World Rotation: " << worldRotation << ", World Scale: " << worldScale;
+	// LOG << "Model Matrix: \n";
+	// LOG << modelMatrix;
+	
+
+
+	// if (dirty) {
+	// 	if (hasParent) {
+	//
+	// 		
+	//
+	// 		
+	// 		//
+	// 		// auto modelMat = MatrixIdentity();
+	// 		// modelMat = MatrixMultiply(modelMat, MatrixRotate({0,0,1}, ))
+	// 		//
+	// 		// worldRotation = localRotation + parent->WorldRotation();
+	// 		//
+	// 		//
+	// 		// Vector2 direction{sin(worldRotation * DEG2RAD), cos(worldRotation * DEG2RAD)};
+	// 		// direction = Vector2Normalize(direction);
+	// 		//
+	// 		// float distance = Vector2Length(localPosition);
+	// 		// // std::cout << direction << std::endl;
+	// 		//
+	// 		// worldPosition = parent->WorldPosition() + (distance * direction);
+	// 		// // BEGIN_LOG();
+	// 		// // LOG << "Direction: " << direction << " LocalPosition * direction: " << localPosition;
+	// 		// // END();
+	// 		// worldScale = localScale * parent->worldScale;
+	//
+
+	// 	}
+	// 	else {
+	// 		worldPosition = localPosition;
+	// 		worldScale = localScale;
+	// 		worldRotation = localRotation;
+	//
+	// 		// BEGIN_LOG();
+	// 		// LOG << GetName() << "World position: " << worldPosition << ", World Rotation: " << worldRotation << ", World Scale: " << worldScale;
+	// 		// END();
+	// 	}
+	// }
+
+	for (const auto& child : children) {
+		if (dirty) {
+			child->MarkDirty();
+		}
+
+		child->RecalculateTransform(modelMatrix);
+	}
+}
+
+Object::Object(const std::string& name, const Vector2& position, const int priority)
 	: collider(*this, Vector2{0, 0}),
-	  ID(lastID),
+	  name(name),
 	  priority(priority),
-	  position(position),
-	  scale(1.0f), rotation(0) {
-	lastID++;
+	  localPosition(position),
+	  localScale(1.0f, 1.0f), localRotation(0) {
 }
 
 void Object::Update() {
@@ -37,8 +102,8 @@ const Collider& Object::Collider() const {
 	return collider;
 }
 
-int Object::GetID() const {
-	return ID;
+std::string Object::GetName() const {
+	return name;
 }
 
 int Object::GetPriority() const {
@@ -49,103 +114,132 @@ void Object::SetPriority(const int priority) {
 	this->priority = priority;
 }
 
-void Object::SetParent(const int parentID) {
-	if (parent == parentID) {
-		BEGIN_ERROR();
-		LOG << "Object with ID: " << ID << " already has this parent!";
-		END();
-	}
-
-	Object* newParent = objectManager->Get(parentID);
-
-	if (newParent == nullptr) {
-		BEGIN_ERROR();
-		LOG << "Could not find new parent object with ID: " << parentID;
-		END();
-		return;
-	}
-
-	if (parent != -1) {
-		Object* currentParent = objectManager->Get(parentID);
-		if (currentParent != nullptr) {
-			currentParent->RemoveChild(parentID);
+bool Object::SetParent(Object* parent) {
+	if (parent == nullptr) {
+		if (this->parent != nullptr) {
+			this->parent->RemoveChild(this);
 		}
+		this->parent = nullptr;
+		hasParent = false;
+		return true;
 	}
 
-	this->parent = parentID;
-	newParent->AddChild(parentID);
+	if (parent == this->parent) {
+		BEGIN_ERROR();
+		LOG << "Object with ID: " << name << " already has parent with ID: !";
+		END();
+		return false;
+	}
 
-	BEGIN_LOG();
-	LOG << "Set parent of object with ID: " << ID << " to object with ID:" << parentID;
-	END();
+	if (this->parent != nullptr) {
+		this->parent->RemoveChild(this);
+	}
+
+	this->parent = parent;
+
+	hasParent = true;
+	return true;
 }
 
-void Object::AddChild(const int id) {
-	auto alreadyAdded = std::find(children.begin(), children.end(), id);
+bool Object::AddChild(Object* child) {
+	if (child == nullptr) {
+		BEGIN_ERROR();
+		LOG << "Cannot add child that is null!";
+		END();
+		return false;
+	}
+
+	const auto alreadyAdded = std::ranges::find(children, child);
 	if (alreadyAdded != children.end()) {
 		BEGIN_ERROR();
-		LOG << "Object with id: " << id << " already has child with id: " << id;
+		LOG << "Object with id: " << name << " already has child with id: " << child->GetName();
 		END();
-		return;
+		return false;
 	}
 
-	if (objectManager->Get(id) == nullptr) {
-		BEGIN_ERROR();
-		LOG << "Object with id: " << id << " could not be added as a child as it couldn't be found!";
-		END();
-		return;
+	if (!child->SetParent(this)) {
+		return false;
 	}
-
-	children.push_back(id);
+	children.push_back(child);
+	MarkDirty();
+	// child->MarkDirty();
+	// child->RecalculateTransform();
+	// child->SetPosition(child->WorldPosition() - WorldPosition()); 
+	return true;
 }
 
-bool Object::RemoveChild(const int id) {
-	for (int i = children.size() - 1; i >= 0; i--) {
-		if (children[i] == id) {
-			children.erase(children.begin() + i);
-			return true;
-		}
+bool Object::RemoveChild(Object* child) {
+	if (child == nullptr) {
+		BEGIN_ERROR();
+		LOG << "Cannot remove child that is null!";
+		END();
+		return false;
 	}
 
-	return false;
+	const auto pos = std::ranges::find(children, child);
+
+	if (pos == children.end()) {
+		BEGIN_LOG();
+		LOG << "Failed to remove child with name " << child->GetName();
+		return false;
+	}
+
+	children.erase(pos);
+	return true;
 }
 
 void Object::SetPosition(const Vector2& position) {
-	for (const auto& child : children) {
-		Object* childObject = objectManager->Get(child);
-		Vector2 offset = childObject->GetPosition() - GetPosition();
-		childObject->SetPosition(position + offset);
-	}
+	this->localPosition = position;
 
-	this->position = position;
+	for (const auto& child : children) {
+		child->MarkDirty();
+	}
 }
 
 void Object::SetScale(const Vector2& scale) {
-	for (const auto& child : children) {
-		Object* childObject = objectManager->Get(child);
-		childObject->SetScale(scale * childObject->GetScale());
-	}
+	this->localScale = scale;
 
-	this->scale = scale;
+	for (const auto& child : children) {
+		child->MarkDirty();
+	}
 }
 
 void Object::SetRotation(const float rotation) {
+	this->localRotation = rotation;
+
 	for (const auto& child : children) {
-		Object* childObject = objectManager->Get(child);
-		childObject->SetRotation(rotation + childObject->rotation);
+		child->MarkDirty();
 	}
-
-	this-> rotation = rotation;
 }
 
-const Vector2& Object::GetPosition() const {
-	return position;
+const Vector2& Object::LocalPosition() const {
+	return localPosition;
 }
 
-const Vector2& Object::GetScale() const {
-	return scale;
+const Vector2& Object::LocalScale() const {
+	return localScale;
 }
 
-float Object::GetRotation() const {
-	return rotation;
+float Object::LocalRotation() const {
+	return localRotation;
+}
+
+const Vector2& Object::WorldPosition() const {
+	return worldPosition;
+}
+
+const Vector2& Object::WorldScale() const {
+	return worldScale;
+}
+
+float Object::WorldRotation() const {
+	return worldRotation;
+}
+
+void Object::MarkDirty() {
+	dirty = true;
+}
+
+bool Object::HasParent() const {
+	return hasParent;
 }

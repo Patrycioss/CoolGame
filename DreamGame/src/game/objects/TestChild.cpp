@@ -1,7 +1,7 @@
 ﻿#include "TestChild.hpp"
 
-TestChild::TestChild(const Vector2& position, const int priority, const Color& color)
-	: Object(position, priority),
+TestChild::TestChild(const std::string& name, const Vector2& position, const int priority, const Color& color)
+	: Object(name, position, priority),
 	  texture(LoadTexture(
 		  (std::string(RESOURCES) + "/textures/awesomeface.png").
 		  c_str())),
@@ -12,6 +12,6 @@ void TestChild::Update() {
 }
 
 void TestChild::Render() {
-	const auto [x,y] = GetPosition();
+	const auto [x,y] = WorldPosition();
 	DrawTexture(texture, x, y, color);
 }

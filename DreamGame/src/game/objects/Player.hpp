@@ -12,5 +12,5 @@ class Player final : public Object {
 		void Render() override;
 
 	public:
-		explicit Player(const Vector2& position, int priority, const Color& color = WHITE);
+		explicit Player(const std::string& name, const Vector2& position, int priority, const Color& color = WHITE);
 };

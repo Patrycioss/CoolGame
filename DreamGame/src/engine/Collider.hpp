@@ -1,9 +1,6 @@
 ﻿#pragma once
 
 #include <raylib.h>
-#include <stdexcept>
-
-#include "raymath.h"
 
 class Object;
 

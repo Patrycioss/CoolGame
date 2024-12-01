@@ -1,5 +1,8 @@
 ﻿#include "Collider.hpp"
 
+#include <raymath.h>
+#include <stdexcept>
+
 #include "Object.hpp"
 
 Collider::Collider(Object& gameObject, const float radius): owner(gameObject), type(Type::Circle), radius(radius) {
@@ -17,7 +20,7 @@ Object& Collider::Owner() const {
 }
 
 void Collider::DebugRender(const Color& color) const {
-	const auto [x, y] = owner.GetPosition();
+	const auto [x, y] = owner.WorldPosition();
 
 	if (type == Type::Rectangle) {
 		DrawRectangle((int)x, (int)y, (int)width, (int)height, color);
@@ -27,8 +30,8 @@ void Collider::DebugRender(const Color& color) const {
 }
 
 bool Collider::RectRectOverlaps(const Collider& first, const Collider& second) {
-	const auto [firstX,firstY] = first.Owner().GetPosition();
-	const auto [secondX,secondY] = second.Owner().GetPosition();
+	const auto [firstX,firstY] = first.Owner().WorldPosition();
+	const auto [secondX,secondY] = second.Owner().WorldPosition();
 	return secondX < firstX + first.width
 		&&
 		secondY + second.width > firstX
@@ -39,12 +42,12 @@ bool Collider::RectRectOverlaps(const Collider& first, const Collider& second) {
 }
 
 bool Collider::CircleCircleOverlaps(const Collider& first, const Collider& second) {
-	return Vector2Distance(first.Owner().GetPosition(), second.Owner().GetPosition()) > first.radius + second.radius;
+	return Vector2Distance(first.Owner().WorldPosition(), second.Owner().WorldPosition()) > first.radius + second.radius;
 }
 
 bool Collider::CircleRectOverlaps(const Collider& circle, const Collider& rect) {
-	const auto [circleX, circleY] = circle.Owner().GetPosition();
-	const auto [rectX, rectY] = rect.Owner().GetPosition();
+	const auto [circleX, circleY] = circle.Owner().WorldPosition();
+	const auto [rectX, rectY] = rect.Owner().WorldPosition();
 
 	float testX = circleX;
 	float testY = circleY;

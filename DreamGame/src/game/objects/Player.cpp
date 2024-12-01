@@ -18,15 +18,30 @@ void Player::Update() {
 		direction.x += 1;
 	}
 
-	SetPosition(GetPosition() + direction * GetFrameTime() * 1000);
+	float rotation = 0;
+	if (IsKeyDown(KEY_A)) {
+		rotation -= 1;
+	}
+
+	if (IsKeyDown(KEY_D)) {
+		rotation += 1;
+	}
+
+	// printf("rotatiion %f\n", rotation);
+	
+	SetPosition(LocalPosition() + direction * GetFrameTime() * 1000);
+	SetRotation(LocalRotation() + rotation * GetFrameTime() * 1000);
 }
 
 void Player::Render() {
-	const auto [x,y] = GetPosition();
-	DrawTexture(texture, x, y, color);
+	const auto [x,y] = WorldPosition();
+	const auto [scaleX, scaleY] = WorldScale();
+	// DrawTexture(texture, x, y, color);
+	Vector2 size = Vector2{scaleX * texture.width, scaleY * texture.height};
+	DrawTexturePro(texture, {0,0,(float)texture.width,(float)texture.height},{x,y,size.x, size.y}, size/2.0f, WorldRotation(), color);
 }
 
-Player::Player(const Vector2& position, const int priority, const Color& color)
-	: Object(position, priority), texture(LoadTexture((std::string(RESOURCES) + "/textures/awesomeface.png").c_str())),
+Player::Player(const std::string& name,const Vector2& position, const int priority, const Color& color)
+	: Object(name,position, priority), texture(LoadTexture((std::string(RESOURCES) + "/textures/awesomeface.png").c_str())),
 	  color(color) {
 }

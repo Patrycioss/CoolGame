@@ -64,8 +64,8 @@ Scene::Scene(const std::string& name)
 	: name(name) {
 }
 
-bool Scene::Remove(const unsigned ID) {
-	return objectManager.Remove(ID);
+bool Scene::Remove(const Object* object) {
+	return objectManager.Remove(object);
 }
 
 void Scene::Sort() {

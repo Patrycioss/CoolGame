@@ -6,10 +6,10 @@
 
 TestScene2::TestScene2(const std::string& name)
 	: Scene(name) {
-	Player* player = Add<Player>(Vector2{200, 200}, 10, WHITE);
-	TestChild* child = Add<TestChild>(Vector2{400,400}, 20, RED);
+	Player* player = Add<Player>("Player",Vector2{200, 200}, 10, WHITE);
+	TestChild* child = Add<TestChild>("TestChild",Vector2{0,0}, 20, RED);
 
-	player->AddChild(child->GetID());
+	player->AddChild(child);
 }
 
 void TestScene2::Start() {

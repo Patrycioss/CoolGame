@@ -1,58 +1,76 @@
 ﻿#include "ObjectManager.hpp"
+
+#include "raymath.h"
 #include "../utils/Logger.hpp"
 
-bool ObjectManager::Remove(const unsigned ID) {
-	int objectCount = (int)objectMap.size();
-	bool success = objectMap.erase(ID) > 0;
-
-	if (success) {
-		BEGIN_LOG();
-		LOG << "Successfully removed! Object count before remove: " << objectCount;
-		LOG << ", after: " << (int) objectMap.size();
+bool ObjectManager::Remove(const Object* object) {
+	if (object == nullptr) {
+		BEGIN_ERROR();
+		LOG << "Can't remove null from objects!";
+		END();
+		return false;
 	}
-	return success;
+
+	auto pos = std::ranges::find_if(objects, [object](const std::unique_ptr<Object>& obj) {
+		return object == obj.get();
+	});
+	
+	// auto pos = std::find(objects.begin(), objects.end(), object);
+	if (pos == objects.end()) {
+		BEGIN_LOG();
+		LOG << "Could not find object with name !";
+	}
+	
+	objects.erase(pos);
+	return true;
 }
 
 void ObjectManager::Sort() {
-	for (int i = (int)sorted.size() - 1; i >= 0; i--) {
-		if (sorted[i] == nullptr) {
-			sorted.erase(sorted.begin() + i);
+	for (int i = (int)depthSorted.size() - 1; i >= 0; i--) {
+		if (depthSorted[i] == nullptr) {
+			depthSorted.erase(depthSorted.begin() + i);
 			continue;
 		}
 
 		for (int j = i - 1; j >= 0; j--) {
-			Object* current = sorted[i];
-			Object* next = sorted[j];
+			Object* current = depthSorted[i];
+			Object* next = depthSorted[j];
 
 			if (next == nullptr) {
-				sorted.erase(sorted.begin() + j);
+				depthSorted.erase(depthSorted.begin() + j);
 				continue;
 			}
 
-			if (current->GetID() == next->GetID()) {
+			if (current->GetName() == next->GetName()) {
 				continue;
 			}
 
 			if (next->GetPriority() < current->GetPriority()) {
-				sorted[j] = current;
-				sorted[i] = next;
+				depthSorted[j] = current;
+				depthSorted[i] = next;
 			}
 		}
 	}
 
 	BEGIN_LOG();
-	LOG << "Sorted objects, size of list: " << (int)sorted.size();
+	LOG << "Sorted objects, size of list: " << (int)depthSorted.size();
 	END();
 }
 
 void ObjectManager::Update() {
-	for (const auto& object : sorted) {
+	for (const auto& object : depthSorted) {
 		object->Update();
+	}
+
+	for (const auto& object : depthSorted) {
+		if (!object->HasParent()) {
+			object->RecalculateTransform(MatrixIdentity());
+		}
 	}
 }
 
 void ObjectManager::Render() {
-	for (const auto& object : sorted) {
+	for (const auto& object : depthSorted) {
 		object->Render();
 	}
 }

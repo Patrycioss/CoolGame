@@ -8,7 +8,7 @@ class TestChild : public Object {
 		Color color;
 
 	public:
-		TestChild(const Vector2& position, const int priority, const Color& color);
+		TestChild(const std::string& name, const Vector2& position, const int priority, const Color& color);
 
 		void Update() override;
 		void Render() override;

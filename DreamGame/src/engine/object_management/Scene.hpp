@@ -37,12 +37,7 @@ class Scene {
 			return objectManager.Add<T>(args...);
 		}
 
-		template<Concepts::Derived<Object> T>
-		T* Get(const unsigned int ID) {
-			return objectManager.Get<T>(ID);
-		}
-
-		bool Remove(unsigned ID);
+		bool Remove(const Object* object);
 		void Sort();
 	
 		[[nodiscard]] const std::string& GetName() const;

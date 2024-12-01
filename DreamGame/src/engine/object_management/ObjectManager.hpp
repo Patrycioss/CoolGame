@@ -1,7 +1,6 @@
 ﻿#pragma once
 #include <algorithm>
 #include <memory>
-#include <unordered_map>
 #include <vector>
 
 #include "../Object.hpp"
@@ -9,38 +8,22 @@
 
 class ObjectManager {
 	private:
-		std::unordered_map<unsigned int, std::unique_ptr<Object>> objectMap;
-		std::vector<Object*> sorted;
+		std::vector<std::unique_ptr<Object>> objects;
+		std::vector<Object*> depthSorted;
 
 	public:
 		template<Concepts::Derived<Object> T, typename... Args>
 		T* Add(Args... args) {
-			auto a = std::unique_ptr<T>(new T(std::move(args)...));
-			auto pair = objectMap.emplace(a->GetID(), std::move(a));
-			T* ptr = static_cast<T*>(pair.first->second.get());
+			objects.push_back(std::unique_ptr<T>(new T(std::move(args)...)));
+			T* ptr = static_cast<T*>(objects.back().get());
 			ptr->InternalSetManager(this);
-			sorted.push_back(ptr);
+			depthSorted.push_back(ptr);
 			return ptr;
 		}
 
-		template<Concepts::Derived<Object> T>
-		T* Get(const unsigned int ID) {
-			if (!objectMap.contains(ID)) {
-				return nullptr;
-			}
-			return static_cast<T*>(objectMap[ID].get());
-		}
-
-		Object* Get(const unsigned int ID) {
-			if (!objectMap.contains(ID)) {
-				return nullptr;
-			}
-			return objectMap[ID].get();
-		}
-
-		bool Remove(unsigned ID);
 
 		void Sort();
 		void Update();
 		void Render();
+		bool Remove(const Object* object);
 };

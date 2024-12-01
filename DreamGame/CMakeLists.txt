@@ -35,6 +35,8 @@ target_link_libraries(${PROJECT_NAME} raylib)
 target_compile_definitions(${PROJECT_NAME} PRIVATE RESOURCES="${CMAKE_CURRENT_BINARY_DIR}/resources")
 
 
+# Todo: use emscriptem wasm embedding for assets instead for faster page loading
+
 # Web Configurations
 if (${PLATFORM} STREQUAL "Web")
     set_target_properties(${PROJECT_NAME} PROPERTIES OUTPUT_NAME "index")
